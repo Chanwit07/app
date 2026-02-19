@@ -62,6 +62,15 @@ if ($stmt->execute()) {
     $teleMsg .= "📅 วันที่: " . thaiDate(null, 'full');
     sendTelegram($teleMsg);
 
+    // In-app notification for admins (bell icon)
+    createNotification(
+        $conn,
+        'new_request',
+        'คำขอรหัสสินทรัพย์ใหม่ #' . $newId,
+        'หน่วยงาน: ' . $department . ' | โดย: ' . sanitize($_SESSION['fullname']),
+        BASE_URL . '/kanban.php'
+    );
+
     jsonResponse(true, 'ส่งคำขอรหัสสินทรัพย์เรียบร้อยแล้ว (เลขที่: #' . $newId . ')');
 } else {
     $stmt->close();

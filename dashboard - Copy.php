@@ -67,6 +67,7 @@ $todayTotal = $todayAsset + $todaySupply;
 ?>
 
 <div class="animate-fadeInUp">
+    <!-- Stat Cards -->
     <div class="row g-4 mb-4">
         <div class="col-6 col-lg-3">
             <div class="stat-card">
@@ -122,6 +123,7 @@ $todayTotal = $todayAsset + $todaySupply;
         </div>
     </div>
 
+    <!-- KPI Row -->
     <div class="row g-4 mb-4">
         <div class="col-md-4">
             <div class="card-glass p-4 text-center">
@@ -155,22 +157,19 @@ $todayTotal = $todayAsset + $todaySupply;
         </div>
     </div>
 
+    <!-- Charts -->
     <div class="row g-4">
         <div class="col-lg-8">
             <div class="card-glass p-4">
                 <h6 class="fw-bold mb-3"><i class="fas fa-chart-bar me-2 text-primary"></i>คำขอรายเดือน (6 เดือนล่าสุด)
                 </h6>
-                <div style="position: relative; height: 250px; width: 100%;">
-                    <canvas id="monthlyChart"></canvas>
-                </div>
+                <canvas id="monthlyChart" height="220"></canvas>
             </div>
         </div>
         <div class="col-lg-4">
             <div class="card-glass p-4">
                 <h6 class="fw-bold mb-3"><i class="fas fa-chart-doughnut me-2 text-primary"></i>สัดส่วนสถานะ</h6>
-                <div style="position: relative; height: 250px; width: 100%;">
-                    <canvas id="statusChart"></canvas>
-                </div>
+                <canvas id="statusChart" height="220"></canvas>
             </div>
         </div>
     </div>

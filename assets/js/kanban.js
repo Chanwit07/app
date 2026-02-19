@@ -157,3 +157,119 @@ function escHtml(str) {
     div.textContent = str;
     return div.innerHTML;
 }
+
+// ====================================================
+// Completed cards hide/dismiss functionality
+// Uses localStorage to persist hidden cards
+// ====================================================
+
+const STORAGE_KEY = 'kanban_hidden_completed';
+
+function getHiddenCards() {
+    try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    } catch { return []; }
+}
+
+function saveHiddenCards(arr) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
+}
+
+/** Hide a single completed card */
+function hideCompletedCard(cardKey, btnEl) {
+    const card = btnEl.closest('.kanban-card');
+    if (!card) return;
+
+    // Animate out
+    card.style.transition = 'all 0.3s ease';
+    card.style.opacity = '0';
+    card.style.transform = 'translateX(20px)';
+    setTimeout(() => {
+        card.style.display = 'none';
+        updateCompletedCount();
+    }, 300);
+
+    // Save to localStorage
+    const hidden = getHiddenCards();
+    if (!hidden.includes(cardKey)) {
+        hidden.push(cardKey);
+        saveHiddenCards(hidden);
+    }
+}
+
+/** Toggle hide/show ALL completed cards */
+function toggleHideAllCompleted() {
+    const container = document.getElementById('completedCards');
+    const cards = container.querySelectorAll('.kanban-card');
+    const label = document.getElementById('toggleHideLabel');
+    const icon = document.getElementById('toggleHideAll').querySelector('i');
+
+    // Check if any visible cards remain
+    const visibleCards = Array.from(cards).filter(c => c.style.display !== 'none');
+
+    if (visibleCards.length > 0) {
+        // Hide all
+        const hidden = getHiddenCards();
+        cards.forEach(card => {
+            card.style.transition = 'all 0.3s ease';
+            card.style.opacity = '0';
+            card.style.transform = 'translateX(20px)';
+            setTimeout(() => { card.style.display = 'none'; }, 300);
+            const key = card.getAttribute('data-card-key');
+            if (key && !hidden.includes(key)) hidden.push(key);
+        });
+        saveHiddenCards(hidden);
+        label.textContent = 'แสดงทั้งหมด';
+        icon.className = 'fas fa-eye me-1';
+        setTimeout(updateCompletedCount, 350);
+    } else {
+        // Show all
+        saveHiddenCards([]);
+        cards.forEach(card => {
+            card.style.display = '';
+            card.style.transition = 'all 0.3s ease';
+            card.style.opacity = '1';
+            card.style.transform = 'translateX(0)';
+        });
+        label.textContent = 'ซ่อนทั้งหมด';
+        icon.className = 'fas fa-eye-slash me-1';
+        updateCompletedCount();
+    }
+}
+
+/** Update the completed column count badge */
+function updateCompletedCount() {
+    const container = document.getElementById('completedCards');
+    if (!container) return;
+    const visibleCount = Array.from(container.querySelectorAll('.kanban-card'))
+        .filter(c => c.style.display !== 'none').length;
+    const countEl = document.getElementById('completedCount');
+    if (countEl) countEl.textContent = visibleCount;
+}
+
+/** On page load: restore hidden state from localStorage */
+document.addEventListener('DOMContentLoaded', function() {
+    const hidden = getHiddenCards();
+    if (hidden.length === 0) return;
+
+    const container = document.getElementById('completedCards');
+    if (!container) return;
+
+    hidden.forEach(key => {
+        const card = container.querySelector(`[data-card-key="${key}"]`);
+        if (card) card.style.display = 'none';
+    });
+
+    updateCompletedCount();
+
+    // Update toggle button label
+    const cards = container.querySelectorAll('.kanban-card');
+    const allHidden = Array.from(cards).every(c => c.style.display === 'none');
+    if (allHidden && cards.length > 0) {
+        const label = document.getElementById('toggleHideLabel');
+        const icon = document.getElementById('toggleHideAll')?.querySelector('i');
+        if (label) label.textContent = 'แสดงทั้งหมด';
+        if (icon) icon.className = 'fas fa-eye me-1';
+    }
+});
+

@@ -95,6 +95,11 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
 
             <div class="nav-section">
                 <span class="nav-section-title">ติดตาม & ประวัติ</span>
+                <a href="<?= BASE_URL ?>/my-requests.php"
+                    class="nav-link <?= $currentPage === 'my-requests' ? 'active' : '' ?>">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span>คำขอของฉัน</span>
+                </a>
                 <a href="<?= BASE_URL ?>/tracking.php"
                     class="nav-link <?= $currentPage === 'tracking' ? 'active' : '' ?>">
                     <i class="fas fa-search-location"></i>
@@ -107,13 +112,20 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
                 </a>
             </div>
 
-            <?php if (isSuperAdmin()): ?>
+            <?php if (isAdmin()): ?>
                 <div class="nav-section">
                     <span class="nav-section-title">จัดการระบบ</span>
-                    <a href="<?= BASE_URL ?>/admin/manage_users.php"
-                        class="nav-link <?= $currentPage === 'manage_users' ? 'active' : '' ?>">
-                        <i class="fas fa-users-cog"></i>
-                        <span>จัดการผู้ใช้</span>
+                    <?php if (isSuperAdmin()): ?>
+                        <a href="<?= BASE_URL ?>/admin/manage_users.php"
+                            class="nav-link <?= $currentPage === 'manage_users' ? 'active' : '' ?>">
+                            <i class="fas fa-users-cog"></i>
+                            <span>จัดการผู้ใช้</span>
+                        </a>
+                    <?php endif; ?>
+                    <a href="<?= BASE_URL ?>/admin/settings.php"
+                        class="nav-link <?= $currentPage === 'settings' ? 'active' : '' ?>">
+                        <i class="fas fa-cog"></i>
+                        <span>ตั้งค่าระบบ</span>
                     </a>
                 </div>
             <?php endif; ?>
@@ -160,6 +172,35 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
                 </div>
             </div>
             <div class="d-flex align-items-center gap-3">
+                <?php if (isAdmin()): ?>
+                    <!-- Notification Bell -->
+                    <div class="dropdown" id="notificationBell">
+                        <button class="btn btn-link text-dark position-relative p-1" type="button" data-bs-toggle="dropdown"
+                            data-bs-auto-close="outside" aria-expanded="false" style="font-size: 1.2rem;">
+                            <i class="fas fa-bell"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                                id="notifBadge" style="font-size: 0.6rem; display: none;">0</span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end shadow-lg p-0"
+                            style="width: 360px; max-height: 420px; border-radius: 12px; overflow: hidden;">
+                            <div class="d-flex justify-content-between align-items-center px-3 py-2"
+                                style="background: linear-gradient(135deg, #667eea, #764ba2);">
+                                <span class="fw-bold text-white"><i class="fas fa-bell me-1"></i> แจ้งเตือน</span>
+                                <button class="btn btn-sm btn-link text-white-50 p-0" onclick="markAllRead()"
+                                    title="อ่านทั้งหมด">
+                                    <i class="fas fa-check-double"></i>
+                                </button>
+                            </div>
+                            <div id="notifList" style="max-height: 340px; overflow-y: auto;">
+                                <div class="text-center text-muted py-4"><i class="fas fa-spinner fa-spin"></i> กำลังโหลด...
+                                </div>
+                            </div>
+                            <div class="text-center border-top py-2">
+                                <small class="text-muted">แจ้งเตือนอัปเดตอัตโนมัติ</small>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif; ?>
                 <?= roleBadge($_SESSION['role'] ?? 'user') ?>
                 <div class="dropdown">
                     <button class="btn btn-link text-decoration-none dropdown-toggle p-0" type="button"
@@ -175,6 +216,8 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
                         <li>
                             <hr class="dropdown-divider">
                         </li>
+                        <li><a class="dropdown-item" href="<?= BASE_URL ?>/profile.php"><i
+                                    class="fas fa-user-circle me-2"></i>โปรไฟล์</a></li>
                         <li><a class="dropdown-item text-danger" href="<?= BASE_URL ?>/logout.php"><i
                                     class="fas fa-sign-out-alt me-2"></i>ออกจากระบบ</a></li>
                     </ul>

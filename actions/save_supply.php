@@ -83,6 +83,16 @@ if ($stmt->execute()) {
     $teleMsg .= "📅 วันที่: " . thaiDate(null, 'full');
     sendTelegram($teleMsg);
 
+    // In-app notification for admins (bell icon)
+    $typeLabel2 = $requestType === 'new_code' ? 'ขอรหัสพัสดุใหม่' : 'แก้ไขรายละเอียดพัสดุ';
+    createNotification(
+        $conn,
+        'new_request',
+        $typeLabel2 . ' #' . $newId,
+        'รายการ: ' . $itemName . ' | โดย: ' . sanitize($_SESSION['fullname']),
+        BASE_URL . '/kanban.php'
+    );
+
     $msg = $requestType === 'new_code' ? 'ส่งคำขอรหัสพัสดุใหม่เรียบร้อย' : 'ส่งคำขอแก้ไขรายละเอียดเรียบร้อย';
     jsonResponse(true, $msg . ' (เลขที่: #' . $newId . ')');
 } else {

@@ -151,19 +151,48 @@ function thaiDate($datetime = null, $format = 'long')
 }
 
 /**
+ * Get app setting from database
+ * @param string $key
+ * @param string $default
+ * @return string
+ */
+function getAppSetting($key, $default = '')
+{
+    global $conn;
+    $stmt = $conn->prepare("SELECT setting_value FROM app_settings WHERE setting_key = ?");
+    if (!$stmt)
+        return $default;
+    $stmt->bind_param("s", $key);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    $stmt->close();
+    return $row ? ($row['setting_value'] ?? $default) : $default;
+}
+
+/**
  * Send message via Telegram Bot API
- * @param string $message - Text to send
+ * Reads config from app_settings DB table
+ * @param string $message - Text to send (HTML)
  * @return bool
  */
 function sendTelegram($message)
 {
-    if (TELEGRAM_BOT_TOKEN === 'YOUR_BOT_TOKEN_HERE') {
-        return false; // Skip if not configured
+    $enabled = getAppSetting('telegram_enabled', '0');
+    if ($enabled !== '1') {
+        return false;
     }
 
-    $url = "https://api.telegram.org/bot" . TELEGRAM_BOT_TOKEN . "/sendMessage";
+    $botToken = getAppSetting('telegram_bot_token', '');
+    $chatId = getAppSetting('telegram_chat_id', '');
+
+    if (empty($botToken) || empty($chatId)) {
+        return false;
+    }
+
+    $url = "https://api.telegram.org/bot" . $botToken . "/sendMessage";
     $data = [
-        'chat_id' => TELEGRAM_CHAT_ID,
+        'chat_id' => $chatId,
         'text' => $message,
         'parse_mode' => 'HTML'
     ];
@@ -182,6 +211,23 @@ function sendTelegram($message)
     curl_close($ch);
 
     return $result !== false;
+}
+
+/**
+ * Create in-app notification for admin(s)
+ * @param mysqli $conn
+ * @param string $type - 'new_request', 'status_update'
+ * @param string $title
+ * @param string $message
+ * @param string|null $link - URL to open when clicked
+ * @param int|null $userId - specific user, null = all admins
+ */
+function createNotification($conn, $type, $title, $message, $link = null, $userId = null)
+{
+    $stmt = $conn->prepare("INSERT INTO notifications (user_id, type, title, message, link) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("issss", $userId, $type, $title, $message, $link);
+    $stmt->execute();
+    $stmt->close();
 }
 
 /**
