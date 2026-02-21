@@ -202,7 +202,7 @@ function renderAssetBadge($type) {
             
             <?php foreach ($items as $item): ?>
                 <div class="col-sm-6 col-md-4 col-xl-3">
-                    <div class="inv-card" onclick='showAssetDetail(<?= json_encode($item) ?>)'>
+                    <div class="inv-card" data-asset="<?= htmlspecialchars(json_encode($item), ENT_QUOTES, 'UTF-8') ?>" onclick="showAssetDetail(JSON.parse(this.dataset.asset))">
                         <div class="inv-img-wrap border-bottom">
                             <?php if ($item['image_path']): ?>
                                 <img src="<?= BASE_URL ?>/uploads/<?= htmlspecialchars($item['image_path']) ?>" loading="lazy">
@@ -326,7 +326,7 @@ function showAssetDetail(data) {
         imgEl.classList.remove('d-none');
         noImgEl.classList.add('d-none');
     } else {
-        imgEl.addClass('d-none');
+        imgEl.classList.add('d-none');
         noImgEl.classList.remove('d-none');
     }
     

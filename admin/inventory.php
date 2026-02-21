@@ -439,7 +439,7 @@ $extraJs = <<<'JS'
 const BASE = document.querySelector('link[href*="style.css"]').href.replace('/assets/css/style.css', '');
 let modal;
 
-$(document.ready(function() {
+$(document).ready(function() {
     // Initialize DataTable
     $('#inventoryTable').DataTable({
         language: { url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/th.json' },
@@ -460,7 +460,7 @@ $(document.ready(function() {
             reader.readAsDataURL(file);
         }
     });
-}));
+});
 
 // ---- Dynamic Form Logic ----
 function toggleFormFields() {
