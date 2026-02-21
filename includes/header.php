@@ -77,6 +77,16 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
                     <i class="fas fa-home"></i>
                     <span>หน้าหลัก</span>
                 </a>
+                <a href="<?= BASE_URL ?>/learning.php"
+                    class="nav-link <?= $currentPage === 'learning' || $currentPage === 'view_learning' ? 'active' : '' ?>">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>สื่อการเรียนรู้</span>
+                </a>
+                <a href="<?= BASE_URL ?>/inventory.php"
+                    class="nav-link <?= $currentPage === 'inventory' && strpos($_SERVER['PHP_SELF'], '/admin/') === false ? 'active' : '' ?>">
+                    <i class="fas fa-boxes-stacked"></i>
+                    <span>ทะเบียนทรัพย์สิน</span>
+                </a>
             </div>
 
             <div class="nav-section">
@@ -122,6 +132,16 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
                             <span>จัดการผู้ใช้</span>
                         </a>
                     <?php endif; ?>
+                    <a href="<?= BASE_URL ?>/admin/learning.php"
+                        class="nav-link <?= $currentPage === 'learning' && strpos($_SERVER['PHP_SELF'], '/admin/') !== false ? 'active' : '' ?>">
+                        <i class="fas fa-video"></i>
+                        <span>จัดการสื่อการเรียนรู้</span>
+                    </a>
+                    <a href="<?= BASE_URL ?>/admin/inventory.php"
+                        class="nav-link <?= $currentPage === 'inventory' && strpos($_SERVER['PHP_SELF'], '/admin/') !== false ? 'active' : '' ?>">
+                        <i class="fas fa-boxes"></i>
+                        <span>จัดการทะเบียนทรัพย์สิน</span>
+                    </a>
                     <a href="<?= BASE_URL ?>/admin/settings.php"
                         class="nav-link <?= $currentPage === 'settings' ? 'active' : '' ?>">
                         <i class="fas fa-cog"></i>
