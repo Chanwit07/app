@@ -53,7 +53,7 @@ function checkRole($requiredRoles)
  */
 function loginUser($conn, $username, $password)
 {
-    $stmt = $conn->prepare("SELECT id, username, password_hash, fullname, role, status FROM users WHERE username = ? AND status = 'active'");
+    $stmt = $conn->prepare("SELECT id, username, password_hash, fullname, role, status, department FROM users WHERE username = ? AND status = 'active'");
     $stmt->bind_param("s", $username);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -81,6 +81,7 @@ function loginUser($conn, $username, $password)
     $_SESSION['username'] = $user['username'];
     $_SESSION['fullname'] = $user['fullname'];
     $_SESSION['role'] = $user['role'];
+    $_SESSION['department'] = $user['department'] ?? '';
 
     return $user;
 }

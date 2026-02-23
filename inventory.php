@@ -3,8 +3,12 @@
  * Inventory Public Hub (User-facing)
  * Displays assets with filters
  */
-$pageTitle = 'ทะเบียนทรัพย์สิน (ส่วนกลาง)';
+$pageTitle = 'ทะเบียนทรัพย์สิน';
 require_once __DIR__ . '/includes/header.php';
+
+// Determine if user should see filtered or all data
+$isAdminUser = isAdmin();
+$userDepartment = $_SESSION['department'] ?? '';
 
 // Safe variables for filter
 $search = sanitize($_GET['search'] ?? '');
@@ -30,6 +34,14 @@ if ($type && in_array($type, ['fixed_asset', 'container', 'computer'])) {
 if ($dept) {
     $sql .= " AND (install_department = ? OR install_section = ?) ";
     $params[] = $dept; $params[] = $dept;
+    $types .= "ss";
+}
+
+// Auto-filter by user's department if not admin
+if (!$isAdminUser && $userDepartment) {
+    $sql .= " AND (install_department = ? OR install_section = ?) ";
+    $params[] = $userDepartment;
+    $params[] = $userDepartment;
     $types .= "ss";
 }
 
@@ -144,7 +156,14 @@ function renderAssetBadge($type) {
     <!-- Hero -->
     <div class="inventory-hero">
         <h2 class="fw-bold"><i class="fas fa-boxes-stacked me-2"></i>ระบบสืบค้นทะเบียนทรัพย์สิน</h2>
-        <p class="mb-0 text-white-50">ค้นหาและดูข้อมูลสินทรัพย์ถาวร ภาชนะถาวร และอุปกรณ์คอมพิวเตอร์ของหน่วยงาน</p>
+        <?php if (!$isAdminUser && $userDepartment): ?>
+            <p class="mb-2 text-white-50">แสดงข้อมูลสินทรัพย์เฉพาะหน่วยงานของคุณ</p>
+            <span class="badge bg-white bg-opacity-25 text-white px-3 py-2" style="font-size: 0.9rem;">
+                <i class="fas fa-building me-1"></i><?= sanitize($userDepartment) ?>
+            </span>
+        <?php else: ?>
+            <p class="mb-0 text-white-50">ค้นหาและดูข้อมูลสินทรัพย์ถาวร ภาชนะถาวร และอุปกรณ์คอมพิวเตอร์ทั้งหมด</p>
+        <?php endif; ?>
     </div>
 
     <!-- Filter Panel -->
@@ -166,6 +185,7 @@ function renderAssetBadge($type) {
                     <option value="computer" <?= $type === 'computer' ? 'selected' : '' ?>>อุปกรณ์คอมพิวเตอร์</option>
                 </select>
             </div>
+            <?php if ($isAdminUser): ?>
             <div class="col-md-3">
                 <label class="form-label fw-semibold text-muted small text-uppercase">จุดติดตั้ง / หน่วยงาน</label>
                 <input type="text" class="form-control" name="dept" value="<?= htmlspecialchars($dept) ?>" placeholder="ระบุหน่วยงาน/แผนก..." list="deptList">
@@ -175,6 +195,7 @@ function renderAssetBadge($type) {
                     <?php endforeach; ?>
                 </datalist>
             </div>
+            <?php endif; ?>
             <div class="col-md-1 d-flex align-items-end">
                 <button type="submit" class="btn w-100 text-white" style="background-color: #1f4037;">
                     ค้นหา
