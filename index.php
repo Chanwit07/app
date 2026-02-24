@@ -169,7 +169,8 @@ $thaiYear = date('Y') + 543;
 
         /* Hero */
         .hero {
-            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 50%, #1565c0 100%);
+            background: linear-gradient(135deg, rgba(13, 17, 55, 0.82) 0%, rgba(26, 35, 126, 0.78) 50%, rgba(21, 101, 192, 0.75) 100%),
+                url('assets/images/hero-bg-train.png') center/cover no-repeat;
             min-height: 85vh;
             display: flex;
             align-items: center;
