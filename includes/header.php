@@ -73,7 +73,8 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
                     </a>
                 <?php endif; ?>
 
-                <a href="<?= BASE_URL ?>/index.php" class="nav-link <?= $currentPage === 'index' ? 'active' : '' ?>">
+                <a href="<?= BASE_URL ?>/dashboard.php"
+                    class="nav-link <?= $currentPage === 'dashboard' ? 'active' : '' ?>">
                     <i class="fas fa-home"></i>
                     <span>หน้าหลัก</span>
                 </a>
@@ -156,6 +157,32 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
                         class="nav-link <?= $currentPage === 'settings' ? 'active' : '' ?>">
                         <i class="fas fa-cog"></i>
                         <span>ตั้งค่าระบบ</span>
+                    </a>
+                </div>
+                <div class="nav-section">
+                    <span class="nav-section-title">จัดการหน้าเว็บ</span>
+                    <a href="<?= BASE_URL ?>/admin/manage_news.php"
+                        class="nav-link <?= $currentPage === 'manage_news' ? 'active' : '' ?>">
+                        <i class="fas fa-newspaper"></i>
+                        <span>จัดการข่าวประชาสัมพันธ์</span>
+                    </a>
+                    <a href="<?= BASE_URL ?>/admin/manage_divisions.php"
+                        class="nav-link <?= $currentPage === 'manage_divisions' ? 'active' : '' ?>">
+                        <i class="fas fa-sitemap"></i>
+                        <span>จัดการหน่วยงาน</span>
+                    </a>
+                </div>
+                <div class="nav-section">
+                    <span class="nav-section-title">จัดการเว็บบล็อก (Blog)</span>
+                    <a href="<?= BASE_URL ?>/admin/manage_posts.php"
+                        class="nav-link <?= $currentPage === 'manage_posts' ? 'active' : '' ?>">
+                        <i class="fas fa-file-alt"></i>
+                        <span>บทความทั้งหมด</span>
+                    </a>
+                    <a href="<?= BASE_URL ?>/admin/manage_tags.php"
+                        class="nav-link <?= $currentPage === 'manage_tags' ? 'active' : '' ?>">
+                        <i class="fas fa-tags"></i>
+                        <span>หมวดหมู่/แท็ก</span>
                     </a>
                 </div>
             <?php endif; ?>

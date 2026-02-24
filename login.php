@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $user = loginUser($conn, $username, $password);
         if ($user) {
             logAudit($conn, 'เข้าสู่ระบบ', 'users', $user['id'], json_encode(['username' => $username]));
-            header('Location: index.php');
+            header('Location: dashboard.php');
             exit;
         } else {
             $error = 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง';

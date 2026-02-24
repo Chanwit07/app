@@ -5,7 +5,7 @@
 $pageTitle = 'แดชบอร์ด';
 $extraCss = '<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>';
 require_once __DIR__ . '/includes/header.php';
-checkRole(['admin', 'super_admin']);
+checkRole(['user', 'admin', 'super_admin']);
 
 // ====== Statistics ======
 $stats = ['total' => 0, 'pending' => 0, 'processing' => 0, 'completed' => 0];

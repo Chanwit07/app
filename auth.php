@@ -10,7 +10,11 @@ require_once __DIR__ . '/config.php';
 function checkAuth()
 {
     if (!isset($_SESSION['user_id'])) {
-        header('Location: login.php');
+        if (!headers_sent()) {
+            header('Location: login.php');
+        } else {
+            echo '<script>window.location.href="login.php";</script>';
+        }
         exit;
     }
 }
@@ -33,12 +37,14 @@ function checkRole($requiredRoles)
     }
 
     if (!in_array($_SESSION['role'], $requiredRoles)) {
-        header('HTTP/1.1 403 Forbidden');
+        if (!headers_sent()) {
+            header('HTTP/1.1 403 Forbidden');
+        }
         echo '<!DOCTYPE html><html><head><meta charset="utf-8"><title>403</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
         </head><body class="d-flex align-items-center justify-content-center min-vh-100 bg-dark text-white">
         <div class="text-center"><h1 class="display-1">403</h1><p class="lead">คุณไม่มีสิทธิ์เข้าถึงหน้านี้</p>
-        <a href="index.php" class="btn btn-outline-light mt-3">กลับหน้าหลัก</a></div></body></html>';
+        <a href="dashboard.php" class="btn btn-outline-light mt-3">กลับหน้าหลัก</a></div></body></html>';
         exit;
     }
 
