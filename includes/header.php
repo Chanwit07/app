@@ -87,6 +87,11 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
                     <i class="fas fa-boxes-stacked"></i>
                     <span>ทะเบียนทรัพย์สิน</span>
                 </a>
+                <a href="<?= BASE_URL ?>/reports.php"
+                    class="nav-link <?= $currentPage === 'reports' && strpos($_SERVER['PHP_SELF'], '/admin/') === false ? 'active' : '' ?>">
+                    <i class="fas fa-chart-line"></i>
+                    <span>รายงานอัจฉริยะ</span>
+                </a>
             </div>
 
             <div class="nav-section">
@@ -141,6 +146,11 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
                         class="nav-link <?= $currentPage === 'inventory' && strpos($_SERVER['PHP_SELF'], '/admin/') !== false ? 'active' : '' ?>">
                         <i class="fas fa-boxes"></i>
                         <span>จัดการทะเบียนทรัพย์สิน</span>
+                    </a>
+                    <a href="<?= BASE_URL ?>/admin/reports.php"
+                        class="nav-link <?= $currentPage === 'reports' && strpos($_SERVER['PHP_SELF'], '/admin/') !== false ? 'active' : '' ?>">
+                        <i class="fas fa-chart-pie"></i>
+                        <span>จัดการรายงาน Dashboard</span>
                     </a>
                     <a href="<?= BASE_URL ?>/admin/settings.php"
                         class="nav-link <?= $currentPage === 'settings' ? 'active' : '' ?>">
