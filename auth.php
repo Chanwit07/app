@@ -11,9 +11,9 @@ function checkAuth()
 {
     if (!isset($_SESSION['user_id'])) {
         if (!headers_sent()) {
-            header('Location: login.php');
+            header('Location: ' . BASE_URL . '/login.php');
         } else {
-            echo '<script>window.location.href="login.php";</script>';
+            echo '<script>window.location.href="' . BASE_URL . '/login.php";</script>';
         }
         exit;
     }
