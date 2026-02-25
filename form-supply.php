@@ -43,23 +43,24 @@ require_once __DIR__ . '/includes/header.php';
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label">หน่วยนับ <span class="text-danger">*</span></label>
-                                <select class="form-select" name="unit" required>
-                                    <option value="">-- เลือก --</option>
-                                    <option value="ชิ้น">ชิ้น</option>
-                                    <option value="อัน">อัน</option>
-                                    <option value="เครื่อง">เครื่อง</option>
-                                    <option value="ตัว">ตัว</option>
-                                    <option value="ชุด">ชุด</option>
-                                    <option value="กล่อง">กล่อง</option>
-                                    <option value="ม้วน">ม้วน</option>
-                                    <option value="แกลลอน">แกลลอน</option>
-                                    <option value="ลิตร">ลิตร</option>
-                                    <option value="กิโลกรัม">กิโลกรัม</option>
-                                    <option value="เมตร">เมตร</option>
-                                    <option value="แผ่น">แผ่น</option>
-                                    <option value="ถุง">ถุง</option>
-                                    <option value="อื่นๆ">อื่นๆ</option>
-                                </select>
+                                <input type="text" class="form-control" name="unit" list="unitListNew" required
+                                    placeholder="พิมพ์หรือเลือกหน่วยนับ">
+                                <datalist id="unitListNew">
+                                    <option value="ชิ้น">
+                                    <option value="อัน">
+                                    <option value="เครื่อง">
+                                    <option value="ตัว">
+                                    <option value="ชุด">
+                                    <option value="กล่อง">
+                                    <option value="ม้วน">
+                                    <option value="แกลลอน">
+                                    <option value="ลิตร">
+                                    <option value="กิโลกรัม">
+                                    <option value="เมตร">
+                                    <option value="แผ่น">
+                                    <option value="ถุง">
+                                    <option value="อื่นๆ">
+                                </datalist>
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label">ปริมาณใช้ต่อปี</label>
@@ -106,17 +107,18 @@ require_once __DIR__ . '/includes/header.php';
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">หน่วยนับ <span class="text-danger">*</span></label>
-                                <select class="form-select" name="unit" required>
-                                    <option value="">-- เลือก --</option>
-                                    <option value="ชิ้น">ชิ้น</option>
-                                    <option value="อัน">อัน</option>
-                                    <option value="เครื่อง">เครื่อง</option>
-                                    <option value="ตัว">ตัว</option>
-                                    <option value="ชุด">ชุด</option>
-                                    <option value="กล่อง">กล่อง</option>
-                                    <option value="ม้วน">ม้วน</option>
-                                    <option value="อื่นๆ">อื่นๆ</option>
-                                </select>
+                                <input type="text" class="form-control" name="unit" list="unitListEdit" required
+                                    placeholder="พิมพ์หรือเลือกหน่วยนับ">
+                                <datalist id="unitListEdit">
+                                    <option value="ชิ้น">
+                                    <option value="อัน">
+                                    <option value="เครื่อง">
+                                    <option value="ตัว">
+                                    <option value="ชุด">
+                                    <option value="กล่อง">
+                                    <option value="ม้วน">
+                                    <option value="อื่นๆ">
+                                </datalist>
                             </div>
                             <div class="col-12">
                                 <label class="form-label">ชื่อเดิม <span class="text-danger">*</span></label>

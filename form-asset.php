@@ -31,16 +31,17 @@ require_once __DIR__ . '/includes/header.php';
                     <!-- กลุ่มสินทรัพย์ -->
                     <div class="col-md-6">
                         <label class="form-label">กลุ่มสินทรัพย์/ยูนิต <span class="text-danger">*</span></label>
-                        <select class="form-select" name="asset_group" required>
-                            <option value="">-- เลือกกลุ่มสินทรัพย์ --</option>
-                            <option value="คอมพิวเตอร์และอุปกรณ์">คอมพิวเตอร์และอุปกรณ์</option>
-                            <option value="เฟอร์นิเจอร์และสิ่งติดตั้ง">เฟอร์นิเจอร์และสิ่งติดตั้ง</option>
-                            <option value="เครื่องใช้สำนักงาน">เครื่องใช้สำนักงาน</option>
-                            <option value="ยานพาหนะ">ยานพาหนะ</option>
-                            <option value="เครื่องจักรและอุปกรณ์">เครื่องจักรและอุปกรณ์</option>
-                            <option value="อาคารและสิ่งก่อสร้าง">อาคารและสิ่งก่อสร้าง</option>
-                            <option value="อื่นๆ">อื่นๆ</option>
-                        </select>
+                        <input type="text" class="form-control" name="asset_group" list="assetGroupList" required
+                            placeholder="พิมพ์หรือเลือกกลุ่มสินทรัพย์">
+                        <datalist id="assetGroupList">
+                            <option value="คอมพิวเตอร์และอุปกรณ์">
+                            <option value="เฟอร์นิเจอร์และสิ่งติดตั้ง">
+                            <option value="เครื่องใช้สำนักงาน">
+                            <option value="ยานพาหนะ">
+                            <option value="เครื่องจักรและอุปกรณ์">
+                            <option value="อาคารและสิ่งก่อสร้าง">
+                            <option value="อื่นๆ">
+                        </datalist>
                     </div>
 
                     <!-- Serial Number -->
@@ -53,13 +54,14 @@ require_once __DIR__ . '/includes/header.php';
                     <!-- ประเภทบัญชี -->
                     <div class="col-md-6">
                         <label class="form-label">ประเภทบัญชี <span class="text-danger">*</span></label>
-                        <select class="form-select" name="account_type" required>
-                            <option value="">-- เลือกประเภทบัญชี --</option>
-                            <option value="ครุภัณฑ์">ครุภัณฑ์</option>
-                            <option value="สินทรัพย์ถาวร">สินทรัพย์ถาวร</option>
-                            <option value="วัสดุคงทน">วัสดุคงทน</option>
-                            <option value="วัสดุสิ้นเปลือง">วัสดุสิ้นเปลือง</option>
-                        </select>
+                        <input type="text" class="form-control" name="account_type" list="accountTypeList" required
+                            placeholder="พิมพ์หรือเลือกประเภทบัญชี">
+                        <datalist id="accountTypeList">
+                            <option value="ครุภัณฑ์">
+                            <option value="สินทรัพย์ถาวร">
+                            <option value="วัสดุคงทน">
+                            <option value="วัสดุสิ้นเปลือง">
+                        </datalist>
                     </div>
 
                     <!-- Image Upload -->

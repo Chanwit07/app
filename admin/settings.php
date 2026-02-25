@@ -53,8 +53,7 @@ $enabled = ($settings['telegram_enabled'] ?? '0') === '1';
                 <div class="mb-4">
                     <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" id="telegramEnabled" name="telegram_enabled"
-                            <?= $enabled ? 'checked' : '' ?>
-                        style="width: 3em; height: 1.5em; cursor: pointer;">
+                            <?= $enabled ? 'checked' : '' ?> style="width: 3em; height: 1.5em; cursor: pointer;">
                         <label class="form-check-label fw-semibold ms-2" for="telegramEnabled" style="cursor: pointer;">
                             <span id="enableLabel">
                                 <?= $enabled ? '✅ เปิดใช้งาน Telegram' : '⏸️ ปิดใช้งาน Telegram' ?>
@@ -146,7 +145,8 @@ $enabled = ($settings['telegram_enabled'] ?? '0') === '1';
 </div>
 
 <?php
-$extraJs = <<<'JS'
+$extraJs = '<script>var BASE_URL = "' . BASE_URL . '";</script>';
+$extraJs .= <<<'JS'
 <script>
 function toggleTokenVisibility() {
     const input = document.getElementById('botToken');
@@ -221,8 +221,6 @@ function testTelegram() {
         Swal.fire({ icon: 'error', title: 'ผิดพลาด', text: 'ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้', customClass: { popup: 'font-prompt' } });
     });
 }
-
-var BASE_URL = '<?= BASE_URL ?>';
 </script>
 JS;
 
